@@ -11,6 +11,8 @@ type ImageData = {
 };
 
 export default function Home() {
+  // TODO: add a photo lightbox
+
   const [images, setImages] = useState<ImageData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
