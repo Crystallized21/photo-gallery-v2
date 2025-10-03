@@ -12,11 +12,16 @@ type ImageData = {
 
 export default function Home() {
   const [images, setImages] = useState<ImageData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch("/api/images")
       .then(res => res.json())
-      .then(setImages);
+      .then(data => {
+        setImages(data);
+        setIsLoading(false);
+      })
+      .catch(() => setIsLoading(false));
   }, []);
 
   return (
@@ -39,19 +44,28 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-          {images.map((img, index) => (
-            <ImageContainer
-              key={img.id}
-              image={img}
-              index={index}
-              href={img.src}
-            />
-          ))}
-        </div>
-        <div className="text-center text-xl mt-8 pb-8">
-          <p>You've reached the end of the gallery</p>
-        </div>
+        {isLoading ? (
+          <div className="flex justify-center items-center py-20">
+            <div
+              className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500 shadow-[0px_0px_50px_1px_#2c5282]"/>
+          </div>
+        ) : (
+          <>
+            <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+              {images.map((img, index) => (
+                <ImageContainer
+                  key={img.id}
+                  image={img}
+                  index={index}
+                  href={img.src}
+                />
+              ))}
+            </div>
+            <div className="text-center text-xl mt-8 pb-8">
+              <p>You've reached the end of the gallery</p>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
