@@ -27,6 +27,8 @@ export default function ImageContainer({image, index, href}: ImageContainerProps
             quality={80}
             className="rounded-lg"
             loading={index < 10 ? "eager" : "lazy"}
+            placeholder="blur"
+            blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzIwIiBoZWlnaHQ9IjQ4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNzIwIiBoZWlnaHQ9IjQ4MCIgZmlsbD0iIzFhMjAyYyIvPjwvc3ZnPg=="
             sizes="(max-width: 640px) 100vw,
               (max-width: 1280px) 50vw,
               (max-width: 1536px) 33vw,
