@@ -1,6 +1,7 @@
 "use client";
 
 import * as Sentry from "@sentry/nextjs";
+import {T} from "gt-next";
 import {motion} from "motion/react";
 import {useEffect, useState} from "react";
 import HeaderText from "@/components/HeaderText";
@@ -70,9 +71,11 @@ export default function Home() {
                 </motion.div>
               ))}
             </div>
-            <div className="text-center text-xl mt-8 pb-8">
-              <p>You've reached the end of the gallery</p>
-            </div>
+            <T>
+              <div className="text-center text-xl mt-8 pb-8">
+                <p>You've reached the end of the gallery</p>
+              </div>
+            </T>
           </>
         )}
       </div>

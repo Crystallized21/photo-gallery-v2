@@ -1,0 +1,8 @@
+{
+  "$schema": "https://assets.gtx.dev/config-schema.json",
+  "framework": "next-app",
+  "publish": true,
+  "locales": [
+    "ja"
+  ]
+}
