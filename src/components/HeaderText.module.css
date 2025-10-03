@@ -1,7 +1,7 @@
 .titleLogo {
     font-family: var(--font-pixel-operator), serif;
     font-weight: bold;
-    font-size: 6em;
+    font-size: clamp(4rem, 8vw, 6em);
     color: white;
 
     z-index: 2;
