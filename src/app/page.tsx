@@ -1,6 +1,7 @@
 "use client";
 
 import {useEffect, useState} from "react";
+import {motion} from "framer-motion";
 import ImageContainer from "@/components/ImageContainer";
 import styles from "./page.module.css";
 
@@ -55,12 +56,22 @@ export default function Home() {
           <>
             <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
               {images.map((img, index) => (
-                <ImageContainer
+                <motion.div
                   key={img.id}
-                  image={img}
-                  index={index}
-                  href={img.src}
-                />
+                  initial={{scale: 0, opacity: 0}}
+                  animate={{scale: 1, opacity: 1}}
+                  transition={{
+                    duration: 0.8,
+                    delay: index * 0.05,
+                    ease: "easeOut"
+                  }}
+                >
+                  <ImageContainer
+                    image={img}
+                    index={index}
+                    href={img.src}
+                  />
+                </motion.div>
               ))}
             </div>
             <div className="text-center text-xl mt-8 pb-8">
