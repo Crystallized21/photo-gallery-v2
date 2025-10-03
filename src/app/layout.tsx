@@ -20,7 +20,7 @@ const emojiFont = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "crystallized photo gallery",
+  title: "crystallized photo gallery.",
   description: "A chill little gallery of my photos.",
 };
 
