@@ -1,10 +1,10 @@
 "use client";
 
 import * as Sentry from "@sentry/nextjs";
-import {motion} from "framer-motion";
+import {motion} from "motion/react";
 import {useEffect, useState} from "react";
-import ImageContainer from "@/components/image/ImageContainer";
 import HeaderText from "@/components/HeaderText";
+import ImageContainer from "@/components/image/ImageContainer";
 
 type ImageData = {
   id: string;

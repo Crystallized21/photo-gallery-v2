@@ -8,7 +8,7 @@ const pixelOperator = localFont({
 })
 
 const windowsBold = localFont({
-  src: "../fonts/WindowsBold.ttf",
+  src: "../fonts/windowsBold.ttf",
   variable: "--font-windows-bold"
 })
 
