@@ -1,7 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import localFont from "next/font/local";
 
+const pixelOperator = localFont({
+  src: "../fonts/PixelOperator.ttf",
+  variable: "--font-pixel-operator"
+})
+
+const windowsBold = localFont({
+  src: "../fonts/WindowsBold.ttf",
+  variable: "--font-windows-bold"
+})
+
+const emojiFont = localFont({
+  src: "../fonts/EmojiFont.ttf",
+  variable: "--font-emoji"
+})
 
 export const metadata: Metadata = {
   title: "crystallized photo gallery",
@@ -16,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${pixelOperator.variable} ${windowsBold.variable} ${emojiFont.variable} antialiased`}
       >
         {children}
       </body>
