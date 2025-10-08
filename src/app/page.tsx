@@ -3,7 +3,8 @@
 import * as Sentry from "@sentry/nextjs";
 import {T} from "gt-next";
 import {motion} from "motion/react";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
+import useSWR from "swr";
 import HeaderText from "@/components/HeaderText";
 import ImageContainer from "@/components/image/ImageContainer";
 import ErrorMessage from "@/components/ui/ErrorMessage";
@@ -15,27 +16,29 @@ type ImageData = {
   alt: string;
 };
 
+const fetcher = async (url: string) => {
+  const res = await fetch(url, {cache: "no-store"});
+  if (!res.ok) {
+    Sentry.captureException(new Error(`Request failed: ${res.status}`));
+    throw new Error(`Request failed: ${res.status}`);
+  }
+  return res.json();
+}
+
 export default function Home() {
   // TODO: add a photo lightbox
-  // TODO: optimise bandwidth usage, prob limit api fetches?
 
-  const [images, setImages] = useState<ImageData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const {data: images, error, isLoading} = useSWR<ImageData[]>("/api/images", fetcher, {
+    revalidateOnFocus: false,
+    shouldRetryOnError: true,
+    errorRetryCount: 2,
+  });
 
   useEffect(() => {
-    fetch("/api/images")
-      .then(res => res.json())
-      .then(data => {
-        setImages(data);
-      })
-      .catch(err => {
-        setError("Failed to load images. Please refresh.");
-        Sentry.captureException(err);
-        console.error(err);
-      })
-      .finally(() => setIsLoading(false));
-  }, []);
+    if (error) {
+      Sentry.captureException(error);
+    }
+  }, [error]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-95% to-blue-950">
@@ -49,7 +52,7 @@ export default function Home() {
         ) : (
           <>
             <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-              {images.map((img, index) => (
+              {(images ?? []).map((img, index) => (
                 <motion.div
                   key={img.id}
                   initial={{scale: 0, opacity: 0}}
