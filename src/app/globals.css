@@ -35,6 +35,7 @@
 body {
   background: var(--background);
   color: var(--white);
-  font-family: 'MS PGothic', 'ＭＳ Ｐゴシック', Georgia, Arial, Helvetica, sans-serif;
+  font-family:
+    "MS PGothic", "ＭＳ Ｐゴシック", Georgia, Arial, Helvetica, sans-serif;
   text-shadow: var(--primary-text-shadow);
 }

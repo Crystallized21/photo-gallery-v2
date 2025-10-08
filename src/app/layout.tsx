@@ -35,9 +35,7 @@ export default async function RootLayout({
       <body
         className={`${pixelOperator.variable} ${windowsBold.variable} ${emojiFont.variable} antialiased`}
       >
-        <GTProvider>
-          {children}
-        </GTProvider>
+        <GTProvider>{children}</GTProvider>
       </body>
     </html>
   );
