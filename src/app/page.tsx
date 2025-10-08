@@ -6,6 +6,7 @@ import {motion} from "motion/react";
 import {useEffect, useState} from "react";
 import HeaderText from "@/components/HeaderText";
 import ImageContainer from "@/components/image/ImageContainer";
+import ErrorMessage from "@/components/ui/ErrorMessage";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 
 type ImageData = {
@@ -44,9 +45,7 @@ export default function Home() {
         {isLoading ? (
           <LoadingSpinner/>
         ) : error ? (
-          <div className="text-center text-red-400 py-20">
-            <p>{error}</p>
-          </div>
+          <ErrorMessage message={error}/>
         ) : (
           <>
             <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
