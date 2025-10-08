@@ -6,6 +6,7 @@ import {motion} from "motion/react";
 import {useEffect, useState} from "react";
 import HeaderText from "@/components/HeaderText";
 import ImageContainer from "@/components/image/ImageContainer";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
 
 type ImageData = {
   id: string;
@@ -41,10 +42,7 @@ export default function Home() {
         <HeaderText/>
 
         {isLoading ? (
-          <div className="flex justify-center items-center py-20">
-            <div
-              className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500 shadow-[0px_0px_50px_1px_#2c5282]"/>
-          </div>
+          <LoadingSpinner/>
         ) : error ? (
           <div className="text-center text-red-400 py-20">
             <p>{error}</p>
