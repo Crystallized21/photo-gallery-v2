@@ -18,7 +18,7 @@ type ImageData = {
 
 // fetcher function for SWR. i don't know how it works, but ok.
 const fetcher = async (url: string) => {
-  const res = await fetch(url, { cache: "no-store" });
+  const res = await fetch(url);
   if (!res.ok) {
     Sentry.captureException(new Error(`Request failed: ${res.status}`));
     throw new Error(`Request failed: ${res.status}`);
