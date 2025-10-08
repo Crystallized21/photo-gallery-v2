@@ -16,6 +16,7 @@ type ImageData = {
   alt: string;
 };
 
+// fetcher function for SWR. i don't know how it works, but ok.
 const fetcher = async (url: string) => {
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) {
