@@ -3,7 +3,5 @@
   "framework": "next-app",
   "publish": true,
   "defaultLocale": "en",
-  "locales": [
-    "ja"
-  ]
+  "locales": ["ja"]
 }

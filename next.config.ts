@@ -1,6 +1,6 @@
-import {withSentryConfig} from "@sentry/nextjs";
-import {withGTConfig} from "gt-next/config";
-import type {NextConfig} from "next";
+import { withSentryConfig } from "@sentry/nextjs";
+import { withGTConfig } from "gt-next/config";
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
