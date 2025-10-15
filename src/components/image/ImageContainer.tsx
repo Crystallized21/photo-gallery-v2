@@ -9,7 +9,7 @@ type ImageData = {
 type ImageContainerProps = {
   image: ImageData;
   index: number;
-  href: string;
+  href?: string;
 };
 
 export default function ImageContainer({

@@ -3,12 +3,14 @@
 import * as Sentry from "@sentry/nextjs";
 import { T } from "gt-next";
 import { motion } from "motion/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
+import Lightbox from "yet-another-react-lightbox";
 import HeaderText from "@/components/HeaderText";
 import ImageContainer from "@/components/image/ImageContainer";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import "yet-another-react-lightbox/styles.css";
 
 type ImageData = {
   id: string;
@@ -39,6 +41,8 @@ export default function Home() {
     errorRetryCount: 2,
   });
 
+  const [openImageIndex, setOpenImageIndex] = useState(-1);
+
   useEffect(() => {
     if (error) {
       Sentry.captureException(error);
@@ -67,16 +71,27 @@ export default function Home() {
                     delay: index * 0.05,
                     ease: "easeOut",
                   }}
+                  onClick={() => setOpenImageIndex(index)}
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === "Enter" && setOpenImageIndex(index)}
                 >
-                  <ImageContainer image={img} index={index} href={img.src} />
+                  <ImageContainer image={img} index={index} />
                 </motion.div>
               ))}
             </div>
+
             <T>
               <div className="text-center text-xl mt-8 pb-8">
                 <p>You've reached the end of the gallery</p>
               </div>
             </T>
+
+            <Lightbox
+              open={openImageIndex > -1}
+              close={() => setOpenImageIndex(-1)}
+              slides={images}
+              index={openImageIndex}
+            />
           </>
         )}
       </div>
