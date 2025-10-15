@@ -3,18 +3,20 @@
 import * as Sentry from "@sentry/nextjs";
 import { T } from "gt-next";
 import { motion } from "motion/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
+import Lightbox from "yet-another-react-lightbox";
 import HeaderText from "@/components/HeaderText";
 import ImageContainer from "@/components/image/ImageContainer";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
+import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from "lucide-react";
+import { Thumbnails, Zoom } from "yet-another-react-lightbox/plugins";
+import type { ImageData } from "@/types";
 
-type ImageData = {
-  id: string;
-  src: string;
-  alt: string;
-};
+// todo: future task, add a version counter on the page for some coolness i guess.
 
 // fetcher function for SWR. i don't know how it works, but ok.
 const fetcher = async (url: string) => {
@@ -26,9 +28,14 @@ const fetcher = async (url: string) => {
   return res.json();
 };
 
-export default function Home() {
-  // TODO: add a photo lightbox
+// stop using magic numbers lol.
+const DEFAULT_INDEX = -1;
 
+// variable for mobile
+const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
+export default function Home() {
+  // swr function itself
   const {
     data: images,
     error,
@@ -38,6 +45,13 @@ export default function Home() {
     shouldRetryOnError: true,
     errorRetryCount: 2,
   });
+
+  // lightbox stuff
+  const [openImageIndex, setOpenImageIndex] = useState(DEFAULT_INDEX);
+  const lightboxSlides = images?.map((img) => ({
+    src: img.fullResSrc,
+    thumbnail: img.thumbnailSrc,
+  }));
 
   useEffect(() => {
     if (error) {
@@ -60,6 +74,7 @@ export default function Home() {
               {(images ?? []).map((img, index) => (
                 <motion.div
                   key={img.id}
+                  className="group cursor-pointer"
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{
@@ -67,16 +82,51 @@ export default function Home() {
                     delay: index * 0.05,
                     ease: "easeOut",
                   }}
+                  onClick={() => setOpenImageIndex(index)}
+                  tabIndex={0}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" && setOpenImageIndex(index)
+                  }
                 >
-                  <ImageContainer image={img} index={index} href={img.src} />
+                  <ImageContainer image={img} index={index} />
                 </motion.div>
               ))}
             </div>
+
             <T>
               <div className="text-center text-xl mt-8 pb-8">
                 <p>You've reached the end of the gallery</p>
               </div>
             </T>
+
+            {/* note to self: please do not think about implementing next/image with lightbox. it's not worth it, and you will end up with a lot of bugs. */}
+            {/* if mobile, only use Zoom plugin. if not, use both zoom and thumbnails */}
+            <Lightbox
+              plugins={isMobile ? [Zoom] : [Zoom, Thumbnails]}
+              zoom={{
+                doubleClickDelay: 200,
+                doubleClickMaxStops: 1,
+              }}
+              thumbnails={{
+                width: 100,
+                height: 100,
+                border: 0,
+                gap: 12,
+              }}
+              render={{
+                iconPrev: () => <ChevronLeft />,
+                iconNext: () => <ChevronRight />,
+                iconClose: () => <X />,
+                iconLoading: () => <LoadingSpinner />,
+
+                iconZoomIn: () => <ZoomIn />,
+                iconZoomOut: () => <ZoomOut />,
+              }}
+              open={openImageIndex > DEFAULT_INDEX}
+              close={() => setOpenImageIndex(DEFAULT_INDEX)}
+              slides={lightboxSlides}
+              index={openImageIndex}
+            />
           </>
         )}
       </div>
