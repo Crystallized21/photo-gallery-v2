@@ -47,6 +47,7 @@ export default function Home() {
   const [openImageIndex, setOpenImageIndex] = useState(DEFAULT_INDEX);
   const lightboxSlides = images?.map((img) => ({
     src: img.fullResSrc,
+    thumbnail: img.thumbnailSrc,
   }));
 
   useEffect(() => {
