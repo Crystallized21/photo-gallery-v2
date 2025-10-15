@@ -1,6 +1,15 @@
+import { execSync } from "node:child_process";
 import { withSentryConfig } from "@sentry/nextjs";
 import { withGTConfig } from "gt-next/config";
 import type { NextConfig } from "next";
+import packageJson from "./package.json";
+
+let commitHash = "dev";
+try {
+  commitHash = execSync("git rev-parse --short HEAD").toString().trim();
+} catch (error) {
+  console.warn("⚠️ Failed to get commit hash:", error);
+}
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -13,6 +22,11 @@ const nextConfig: NextConfig = {
         pathname: "/v1/storage/buckets/**",
       },
     ],
+  },
+
+  env: {
+    NEXT_PUBLIC_COMMIT_HASH: commitHash,
+    NEXT_PUBLIC_APP_VERSION: packageJson.version,
   },
 };
 

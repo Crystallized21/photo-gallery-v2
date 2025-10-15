@@ -14,6 +14,7 @@ import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from "lucide-react";
 import { Thumbnails, Zoom } from "yet-another-react-lightbox/plugins";
+import VersionCounter from "@/components/VersionCounter";
 import type { ImageData } from "@/types";
 
 // todo: future task, add a version counter on the page for some coolness i guess.
@@ -129,6 +130,7 @@ export default function Home() {
             />
           </>
         )}
+        <VersionCounter />
       </div>
     </div>
   );
