@@ -16,6 +16,8 @@ import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from "lucide-react";
 import { Thumbnails, Zoom } from "yet-another-react-lightbox/plugins";
 import type { ImageData } from "@/types";
 
+// todo: future task, add a version counter on the page for some coolness i guess.
+
 // fetcher function for SWR. i don't know how it works, but ok.
 const fetcher = async (url: string) => {
   const res = await fetch(url);
