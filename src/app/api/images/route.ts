@@ -31,8 +31,8 @@ export async function GET() {
         id: file.$id,
         alt: file.name,
         thumbnailSrc: thumbnailUrl,
-        fullResSrc: fullResUrl
-      }
+        fullResSrc: fullResUrl,
+      };
     });
 
     return NextResponse.json(files);

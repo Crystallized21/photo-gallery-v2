@@ -47,7 +47,7 @@ export default function Home() {
   const [openImageIndex, setOpenImageIndex] = useState(DEFAULT_INDEX);
   const lightboxSlides = images?.map((img) => ({
     src: img.fullResSrc,
-  }))
+  }));
 
   useEffect(() => {
     if (error) {
@@ -80,7 +80,9 @@ export default function Home() {
                   }}
                   onClick={() => setOpenImageIndex(index)}
                   tabIndex={0}
-                  onKeyDown={(e) => e.key === "Enter" && setOpenImageIndex(index)}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" && setOpenImageIndex(index)
+                  }
                 >
                   <ImageContainer image={img} index={index} />
                 </motion.div>
@@ -96,19 +98,16 @@ export default function Home() {
             {/* note to self: please do not think about implementing next/image with lightbox. it's not worth it, and you will end up with a lot of bugs. '*/}
             <Lightbox
               plugins={[Zoom, Thumbnails]}
-
               zoom={{
                 doubleClickDelay: 200,
                 doubleClickMaxStops: 1,
               }}
-
               thumbnails={{
                 width: 100,
                 height: 100,
                 border: 0,
                 gap: 12,
               }}
-
               render={{
                 iconPrev: () => <ChevronLeft />,
                 iconNext: () => <ChevronRight />,
@@ -116,9 +115,8 @@ export default function Home() {
                 iconLoading: () => <LoadingSpinner />,
 
                 iconZoomIn: () => <ZoomIn />,
-                iconZoomOut: () => <ZoomOut/>,
+                iconZoomOut: () => <ZoomOut />,
               }}
-
               open={openImageIndex > -1}
               close={() => setOpenImageIndex(DEFAULT_INDEX)}
               slides={lightboxSlides}

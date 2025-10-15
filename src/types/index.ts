@@ -3,4 +3,4 @@ export type ImageData = {
   alt: string;
   thumbnailSrc: string;
   fullResSrc: string;
-}
+};
