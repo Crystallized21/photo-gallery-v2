@@ -11,6 +11,9 @@ import ImageContainer from "@/components/image/ImageContainer";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
+import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from "lucide-react";
+import { Thumbnails, Zoom } from "yet-another-react-lightbox/plugins";
 import type { ImageData } from "@/types";
 
 // fetcher function for SWR. i don't know how it works, but ok.
@@ -88,7 +91,32 @@ export default function Home() {
               </div>
             </T>
 
+            {/* note to self: please do not think about implementing next/image with lightbox. it's not worth it, and you will end up with a lot of bugs. '*/}
             <Lightbox
+              plugins={[Zoom, Thumbnails]}
+
+              zoom={{
+                doubleClickDelay: 200,
+                doubleClickMaxStops: 1,
+              }}
+
+              thumbnails={{
+                width: 100,
+                height: 100,
+                border: 0,
+                gap: 12,
+              }}
+
+              render={{
+                iconPrev: () => <ChevronLeft />,
+                iconNext: () => <ChevronRight />,
+                iconClose: () => <X />,
+                iconLoading: () => <LoadingSpinner />,
+
+                iconZoomIn: () => <ZoomIn />,
+                iconZoomOut: () => <ZoomOut/>,
+              }}
+
               open={openImageIndex > -1}
               close={() => setOpenImageIndex(DEFAULT_INDEX)}
               slides={lightboxSlides}
@@ -100,4 +128,3 @@ export default function Home() {
     </div>
   );
 }
-// stop using magic numbers lol.
