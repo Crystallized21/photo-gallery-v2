@@ -95,7 +95,7 @@ export default function Home() {
               </div>
             </T>
 
-            {/* note to self: please do not think about implementing next/image with lightbox. it's not worth it, and you will end up with a lot of bugs. '*/}
+            {/* note to self: please do not think about implementing next/image with lightbox. it's not worth it, and you will end up with a lot of bugs. */}
             <Lightbox
               plugins={[Zoom, Thumbnails]}
               zoom={{
@@ -117,7 +117,7 @@ export default function Home() {
                 iconZoomIn: () => <ZoomIn />,
                 iconZoomOut: () => <ZoomOut />,
               }}
-              open={openImageIndex > -1}
+              open={openImageIndex > DEFAULT_INDEX}
               close={() => setOpenImageIndex(DEFAULT_INDEX)}
               slides={lightboxSlides}
               index={openImageIndex}
