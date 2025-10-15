@@ -11,12 +11,7 @@ import ImageContainer from "@/components/image/ImageContainer";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import "yet-another-react-lightbox/styles.css";
-
-type ImageData = {
-  id: string;
-  src: string;
-  alt: string;
-};
+import type { ImageData } from "@/types";
 
 // fetcher function for SWR. i don't know how it works, but ok.
 const fetcher = async (url: string) => {
@@ -28,9 +23,11 @@ const fetcher = async (url: string) => {
   return res.json();
 };
 
-export default function Home() {
-  // TODO: add a photo lightbox
+// stop using magic numbers lol.
+const DEFAULT_INDEX = -1;
 
+export default function Home() {
+  // swr function itself
   const {
     data: images,
     error,
@@ -41,7 +38,11 @@ export default function Home() {
     errorRetryCount: 2,
   });
 
-  const [openImageIndex, setOpenImageIndex] = useState(-1);
+  // lightbox stuff
+  const [openImageIndex, setOpenImageIndex] = useState(DEFAULT_INDEX);
+  const lightboxSlides = images?.map((img) => ({
+    src: img.fullResSrc,
+  }))
 
   useEffect(() => {
     if (error) {
@@ -64,6 +65,7 @@ export default function Home() {
               {(images ?? []).map((img, index) => (
                 <motion.div
                   key={img.id}
+                  className="group cursor-pointer"
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{
@@ -88,8 +90,8 @@ export default function Home() {
 
             <Lightbox
               open={openImageIndex > -1}
-              close={() => setOpenImageIndex(-1)}
-              slides={images}
+              close={() => setOpenImageIndex(DEFAULT_INDEX)}
+              slides={lightboxSlides}
               index={openImageIndex}
             />
           </>
@@ -98,3 +100,4 @@ export default function Home() {
     </div>
   );
 }
+// stop using magic numbers lol.
