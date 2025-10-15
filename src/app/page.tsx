@@ -31,6 +31,9 @@ const fetcher = async (url: string) => {
 // stop using magic numbers lol.
 const DEFAULT_INDEX = -1;
 
+// variable for mobile
+const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
 export default function Home() {
   // swr function itself
   const {
@@ -97,8 +100,9 @@ export default function Home() {
             </T>
 
             {/* note to self: please do not think about implementing next/image with lightbox. it's not worth it, and you will end up with a lot of bugs. */}
+            {/* if mobile, only use Zoom plugin. if not, use both zoom and thumbnails */}
             <Lightbox
-              plugins={[Zoom, Thumbnails]}
+              plugins={isMobile ? [Zoom] : [Zoom, Thumbnails]}
               zoom={{
                 doubleClickDelay: 200,
                 doubleClickMaxStops: 1,
