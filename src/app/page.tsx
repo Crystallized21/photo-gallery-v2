@@ -96,7 +96,7 @@ export default function Home() {
 
             <T>
               <div className="text-center text-xl mt-8 pb-8">
-                <p>You've reached the end of the gallery</p>
+                <p>You've reached the end of the gallery.</p>
               </div>
             </T>
 
