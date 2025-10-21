@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@sentry/nextjs": "^10.17.0",
-    "appwrite": "^21.0.0",
+    "appwrite": "^21.2.1",
     "gt-next": "^6.6.6",
     "lucide-react": "^0.545.0",
     "motion": "^12.23.22",
