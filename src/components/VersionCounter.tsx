@@ -12,7 +12,7 @@ export default function VersionCounter() {
   const commit = process.env.NEXT_PUBLIC_COMMIT_HASH ?? "";
 
   return (
-    <div className="fixed bottom-0 right-0 m-4">
+    <div className="pb-2 pr-4 flex justify-end items-end">
       <div className="text-center text-lg">
         <h1
           className={styles.versionCounter}
@@ -24,4 +24,3 @@ export default function VersionCounter() {
     </div>
   );
 }
-

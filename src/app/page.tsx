@@ -128,8 +128,8 @@ export default function Home() {
             />
           </>
         )}
-        <VersionCounter />
       </div>
+      <VersionCounter />
     </div>
   );
 }
