@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import localFont from "next/font/local";
-import { getLocale } from "gt-next/server";
 import { GTProvider } from "gt-next";
+import { getLocale } from "gt-next/server";
+import localFont from "next/font/local";
 
 const pixelOperator = localFont({
   src: "../fonts/PixelOperator.ttf",
