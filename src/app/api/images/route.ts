@@ -15,25 +15,27 @@ export async function GET() {
       bucketId: bucketId,
     });
 
-    const files = result.files.map((file) => {
-      // generate thumbnail url
-      const thumbnailUrl = storage.getFilePreview({
-        bucketId: bucketId,
-        fileId: file.$id,
-        quality: 30,
-      });
+    const files = await Promise.all(
+      result.files.map(async (file) => {
+        // generate thumbnail url
+        const thumbnailUrl = storage.getFilePreview({
+          bucketId: bucketId,
+          fileId: file.$id,
+          quality: 30,
+        });
 
-      // get full resolution url
-      const fullResUrl = `${endpoint}/storage/buckets/${bucketId}/files/${file.$id}/view?project=${projectId}`;
+        // get full resolution url
+        const fullResUrl = `${endpoint}/storage/buckets/${bucketId}/files/${file.$id}/view?project=${projectId}`;
 
-      // return the file json body data
-      return {
-        id: file.$id,
-        alt: file.name,
-        thumbnailSrc: thumbnailUrl,
-        fullResSrc: fullResUrl,
-      };
-    });
+        // return the file json body data
+        return {
+          id: file.$id,
+          alt: file.name,
+          thumbnailSrc: thumbnailUrl,
+          fullResSrc: fullResUrl,
+        };
+      }),
+    );
 
     return NextResponse.json(files);
   } catch (error) {
