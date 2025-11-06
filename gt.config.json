@@ -3,5 +3,8 @@
   "framework": "next-app",
   "publish": true,
   "defaultLocale": "en",
-  "locales": ["ja"]
+  "locales": [
+    "ja"
+  ],
+  "_versionId": "58509547aa0e24502d28455e02f3cd4e798e1dd7dbd9190c8ba9a4483d0a72d3"
 }
