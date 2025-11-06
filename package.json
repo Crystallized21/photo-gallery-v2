@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "npx gtx-cli translate && next build",
-    "buildTurbopack": "next build --turbopack",
+    "build": "npx gtx-cli translate && next build --webpack",
+    "buildTurbopack": "npx gtx-cli translate && next build --turbopack",
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write"
