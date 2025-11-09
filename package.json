@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@sentry/nextjs": "^10.20.0",
+    "@vercel/speed-insights": "^1.2.0",
     "appwrite": "^21.0.0",
     "gt-next": "^6.6.6",
     "lucide-react": "^0.552.0",

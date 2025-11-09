@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GTProvider } from "gt-next";
 import { getLocale } from "gt-next/server";
 import localFont from "next/font/local";
@@ -36,6 +37,7 @@ export default async function RootLayout({
         className={`${pixelOperator.variable} ${windowsBold.variable} ${emojiFont.variable} antialiased`}
       >
         <GTProvider>{children}</GTProvider>
+        <SpeedInsights/>
       </body>
     </html>
   );
