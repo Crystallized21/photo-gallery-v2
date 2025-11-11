@@ -1,10 +1,8 @@
 "use client";
 
-import * as Sentry from "@sentry/nextjs";
 import { T } from "gt-next";
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
-import useSWR from "swr";
+import { useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import ImageContainer from "@/components/image/ImageContainer";
 import "yet-another-react-lightbox/styles.css";
@@ -13,48 +11,20 @@ import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from "lucide-react";
 import { Thumbnails, Zoom } from "yet-another-react-lightbox/plugins";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import type { ImageData } from "@/types";
-
-const fetcher = async (url: string) => {
-  const res = await fetch(url);
-  if (!res.ok) {
-    Sentry.captureException(new Error(`Request failed: ${res.status}`));
-    throw new Error(`Request failed: ${res.status}`);
-  }
-  return res.json();
-};
+import { useImages } from "@/hooks/useImages";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const DEFAULT_INDEX = -1;
 
 export default function GalleryClient() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  const {
-    data: images,
-    error,
-    isLoading,
-  } = useSWR<ImageData[]>("/api/images", fetcher, {
-    revalidateOnFocus: false,
-    shouldRetryOnError: true,
-    errorRetryCount: 2,
-  });
-
+  const isMobile = useIsMobile();
+  const { data: images, error, isLoading } = useImages();
   const [openImageIndex, setOpenImageIndex] = useState(DEFAULT_INDEX);
+
   const lightboxSlides = images?.map((img) => ({
     src: img.fullResSrc,
     thumbnail: img.thumbnailSrc,
   }));
-
-  useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
-
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   if (isLoading) {
     return <LoadingSpinner />;
