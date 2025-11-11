@@ -8,6 +8,34 @@ const bucketId = process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID as string;
 const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string;
 const endpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT as string;
 
+/**
+ * GET handler that retrieves all images from the Appwrite storage bucket.
+ *
+ * @returns {Promise<NextResponse>} JSON response containing an array of image objects or an error
+ *
+ * @description
+ * Fetches all files from the configured Appwrite storage bucket and transforms them into
+ * a structured format with thumbnail and full-resolution URLs.
+ *
+ * @example
+ * // Success response (200)
+ * [
+ *   {
+ *     id: "64a1b2c3d4e5f6g7h8i9",
+ *     alt: "sunset-photo.jpg",
+ *     thumbnailSrc: "https://cloud.appwrite.io/.../preview?quality=30",
+ *     fullResSrc: "https://cloud.appwrite.io/.../view?project=..."
+ *   }
+ * ]
+ *
+ * @example
+ * // Error response (500)
+ * {
+ *   error: "Failed to fetch images"
+ * }
+ *
+ * @throws {Error} Captures exceptions to Sentry and returns a 500 status code
+ */
 export async function GET() {
   try {
     // list all files in the bucket

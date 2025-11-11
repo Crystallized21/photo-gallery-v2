@@ -16,7 +16,7 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 
 const DEFAULT_INDEX = -1;
 
-export default function GalleryClient() {
+export default function ImageGallery() {
   const isMobile = useIsMobile();
   const { data: images, error, isLoading } = useImages();
   const [openImageIndex, setOpenImageIndex] = useState(DEFAULT_INDEX);
