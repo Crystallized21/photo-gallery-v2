@@ -1,5 +1,3 @@
-"use client";
-
 import { T } from "gt-next";
 import styles from "./HeaderText.module.css";
 
