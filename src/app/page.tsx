@@ -1,6 +1,6 @@
 import HeaderText from "@/components/HeaderText";
 import ImageGallery from "@/components/image/ImageGallery";
-import VersionCounter from "@/components/VersionCounter";
+import FooterInfo from "@/components/FooterInfo";
 
 export default function Home() {
   return (
@@ -9,7 +9,7 @@ export default function Home() {
         <HeaderText />
         <ImageGallery />
       </div>
-      <VersionCounter />
+      <FooterInfo />
     </div>
   );
 }
