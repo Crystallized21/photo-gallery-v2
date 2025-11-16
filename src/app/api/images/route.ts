@@ -38,24 +38,20 @@ const endpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT as string;
  */
 export async function GET() {
   try {
-    // list all files in the bucket
     const result = await storage.listFiles({
       bucketId: bucketId,
     });
 
     const files = await Promise.all(
       result.files.map(async (file) => {
-        // generate thumbnail url
         const thumbnailUrl = storage.getFilePreview({
           bucketId: bucketId,
           fileId: file.$id,
           quality: 30,
         });
 
-        // get full resolution url
         const fullResUrl = `${endpoint}/storage/buckets/${bucketId}/files/${file.$id}/view?project=${projectId}`;
 
-        // return the file json body data
         return {
           id: file.$id,
           alt: file.name,
