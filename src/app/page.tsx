@@ -1,6 +1,6 @@
+import FooterInfo from "@/components/FooterInfo";
 import HeaderText from "@/components/HeaderText";
 import ImageGallery from "@/components/image/ImageGallery";
-import FooterInfo from "@/components/FooterInfo";
 
 export default function Home() {
   return (
