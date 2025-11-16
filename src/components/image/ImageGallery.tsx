@@ -2,7 +2,7 @@
 
 import { T } from "gt-next";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import ImageContainer from "@/components/image/ImageContainer";
 import "yet-another-react-lightbox/styles.css";
@@ -21,10 +21,14 @@ export default function ImageGallery() {
   const { data: images, error, isLoading } = useImages();
   const [openImageIndex, setOpenImageIndex] = useState(DEFAULT_INDEX);
 
-  const lightboxSlides = images?.map((img) => ({
-    src: img.fullResSrc,
-    thumbnail: img.thumbnailSrc,
-  }));
+  const lightboxSlides = useMemo(
+    () =>
+      images?.map((img) => ({
+        src: img.fullResSrc,
+        thumbnail: img.thumbnailSrc,
+      })),
+    [images],
+  );
 
   if (isLoading) {
     return <LoadingSpinner />;
