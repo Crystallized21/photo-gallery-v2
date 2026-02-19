@@ -30,7 +30,7 @@
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
     "@typescript/native-preview": "7.0.0-dev.20251002.1",
-    "gtx-cli": "^2.5.15",
+    "gtx-cli": "^2.6.24",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3"
   },
