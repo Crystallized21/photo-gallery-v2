@@ -13,7 +13,7 @@ export default function HeaderText() {
           and go outside to do something else, taking a break from the screens.
           <br />
           If you find this website by any other means e.g. email, social media,
-          or word of person, welcome to my gallery.
+          or word of mouth, welcome to my gallery.
           <br />
           <br />
           Hope you enjoy viewing my photos.
