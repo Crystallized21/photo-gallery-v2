@@ -14,7 +14,7 @@ export default function FooterInfo() {
   return (
     <div className="pb-2 px-4 flex justify-between items-center w-full">
       <h1 className={`${styles.versionCounter} text-lg`}>
-        &copy; 2025 Crystallized
+        &copy; 2026 Crystallized
       </h1>
       <h1
         className={`${styles.versionCounter} text-lg`}
