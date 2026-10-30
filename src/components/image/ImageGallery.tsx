@@ -1,74 +1,95 @@
 "use client";
 
 import { T } from "gt-next";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useMemo, useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
+import { Thumbnails, Zoom } from "yet-another-react-lightbox/plugins";
+import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from "lucide-react";
+
 import ImageContainer from "@/components/image/ImageContainer";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import type { ImageData } from "@/types";
+
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
-import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from "lucide-react";
-import { Thumbnails, Zoom } from "yet-another-react-lightbox/plugins";
-import ErrorMessage from "@/components/ui/ErrorMessage";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import { useImages } from "@/hooks/useImages";
-import { useIsMobile } from "@/hooks/useIsMobile";
 
-const DEFAULT_INDEX = -1;
+type ImageGalleryProps = {
+  images: ImageData[];
+};
 
-export default function ImageGallery() {
+const MOBILE_PLUGINS = [Zoom];
+const DESKTOP_PLUGINS = [Zoom, Thumbnails];
+
+export default function ImageGallery({ images }: ImageGalleryProps) {
   const isMobile = useIsMobile();
-  const { data: images, error, isLoading } = useImages();
-  const [openImageIndex, setOpenImageIndex] = useState(DEFAULT_INDEX);
+  const reduceMotion = useReducedMotion();
+
+  const [openImageIndex, setOpenImageIndex] = useState(-1);
 
   const lightboxSlides = useMemo(
     () =>
-      images?.map((img) => ({
-        src: img.fullResSrc,
-        thumbnail: img.thumbnailSrc,
+      images.map((image) => ({
+        src: image.fullResSrc,
+        thumbnail: image.thumbnailSrc,
+        alt: image.alt,
+        width: image.width,
+        height: image.height,
       })),
     [images],
   );
 
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
-
-  if (error) {
-    return <ErrorMessage message="Failed to load images." />;
+  if (images.length === 0) {
+    return (
+      <T>
+        <p className="py-12 text-center">
+          No photographs available.
+        </p>
+      </T>
+    );
   }
 
   return (
     <>
-      <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-        {(images ?? []).map((img, index) => (
-          <motion.div
-            key={img.id}
-            className="group cursor-pointer"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+      <div className="columns-1 gap-4 md:columns-2 lg:columns-3 xl:columns-4">
+        {images.map((image, index) => (
+          <motion.button
+            key={image.id}
+            type="button"
+            aria-label={`View ${image.alt}`}
+            className="group mb-4 block w-full break-inside-avoid cursor-zoom-in text-left"
+            initial={
+              reduceMotion
+                ? false
+                : { opacity: 0, y: 16 }
+            }
+            animate={{ opacity: 1, y: 0 }}
             transition={{
-              duration: 0.8,
-              delay: index * 0.05,
-              ease: "easeOut",
+              duration: 0.3,
+              delay: reduceMotion
+                ? 0
+                : Math.min(index, 8) * 0.04,
             }}
             onClick={() => setOpenImageIndex(index)}
-            tabIndex={0}
-            onKeyDown={(e) => e.key === "Enter" && setOpenImageIndex(index)}
           >
-            <ImageContainer image={img} index={index} />
-          </motion.div>
+            <ImageContainer image={image} index={index} />
+          </motion.button>
         ))}
       </div>
 
       <T>
-        <div className="text-center text-xl mt-8 pb-8">
+        <div className="mt-8 pb-8 text-center text-xl">
           <p>You've reached the end of the gallery.</p>
         </div>
       </T>
 
       <Lightbox
-        plugins={isMobile ? [Zoom] : [Zoom, Thumbnails]}
+        plugins={isMobile ? MOBILE_PLUGINS : DESKTOP_PLUGINS}
+        slides={lightboxSlides}
+        open={openImageIndex >= 0}
+        index={openImageIndex}
+        close={() => setOpenImageIndex(-1)}
         zoom={{
           doubleClickDelay: 200,
           doubleClickMaxStops: 1,
@@ -87,10 +108,6 @@ export default function ImageGallery() {
           iconZoomIn: () => <ZoomIn />,
           iconZoomOut: () => <ZoomOut />,
         }}
-        open={openImageIndex > DEFAULT_INDEX}
-        close={() => setOpenImageIndex(DEFAULT_INDEX)}
-        slides={lightboxSlides}
-        index={openImageIndex}
       />
     </>
   );
