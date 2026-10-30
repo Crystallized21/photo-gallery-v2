@@ -78,9 +78,7 @@ async function getManifest(): Promise<{
       throw new Error("Gallery manifest has no body");
     }
 
-    const json = JSON.parse(
-      await response.Body.transformToString(),
-    );
+    const json = JSON.parse(await response.Body.transformToString());
 
     return {
       manifest: manifestSchema.parse(json),
@@ -175,9 +173,7 @@ async function addImage(filePath: string) {
       Body: JSON.stringify(updated, null, 2),
       ContentType: "application/json",
       CacheControl: "no-store",
-      ...(etag
-        ? { IfMatch: etag }
-        : { IfNoneMatch: "*" }),
+      ...(etag ? { IfMatch: etag } : { IfNoneMatch: "*" }),
     }),
   );
 

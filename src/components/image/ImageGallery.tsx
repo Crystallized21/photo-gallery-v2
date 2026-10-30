@@ -43,9 +43,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
   if (images.length === 0) {
     return (
       <T>
-        <p className="py-12 text-center">
-          No photographs available.
-        </p>
+        <p className="py-12 text-center">No photographs available.</p>
       </T>
     );
   }
@@ -59,17 +57,11 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
             type="button"
             aria-label={`View ${image.alt}`}
             className="group mb-4 block w-full break-inside-avoid cursor-zoom-in text-left"
-            initial={
-              reduceMotion
-                ? false
-                : { opacity: 0, y: 16 }
-            }
+            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: 0.3,
-              delay: reduceMotion
-                ? 0
-                : Math.min(index, 8) * 0.04,
+              delay: reduceMotion ? 0 : Math.min(index, 8) * 0.04,
             }}
             onClick={() => setOpenImageIndex(index)}
           >
